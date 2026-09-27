@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taquizas Edgar | Union City, CA</title>
+<style>
+  :root {
+    --bg: #16171a;
+    --surface: #202226;
+    --surface-2: #2a2d32;
+    --text: #f4f1ec;
+    --muted: #a8a39b;
+    --amber: #f5a524;
+    --orange: #f06a1f;
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(1120px, 92%); margin: 0 auto; }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(22, 23, 26, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; flex-wrap: wrap; }
+  .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: 0.5px; }
+  .logo span { color: var(--amber); }
+  .nav-links { display: flex; gap: 28px; color: var(--muted); font-weight: 500; }
+  .nav-links a:hover { color: var(--text); }
+
+  .btn {
+    display: inline-block; border: none; cursor: pointer;
+    background: linear-gradient(135deg, var(--amber), var(--orange));
+    color: #1a1208; font-weight: 700; font-size: 1rem;
+    padding: 12px 22px; border-radius: 999px;
+    box-shadow: 0 8px 24px rgba(240, 106, 31, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(240, 106, 31, 0.45); }
+  .btn-outline {
+    background: transparent; color: var(--text);
+    border: 2px solid rgba(255,255,255,0.2); box-shadow: none;
+  }
+  .btn-outline:hover { border-color: var(--amber); box-shadow: none; }
+
+  /* Hero */
+  .hero { padding: 110px 0 90px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; inset: -40% -20% auto;
+    height: 600px;
+    background: radial-gradient(circle, rgba(245,165,36,0.18), transparent 65%);
+    z-index: -1;
+  }
+  .badge {
+    display: inline-block; padding: 6px 16px; border-radius: 999px;
+    background: rgba(245,165,36,0.12); color: var(--amber);
+    font-size: 0.85rem; font-weight: 600; margin-bottom: 22px;
+  }
+  .hero h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: 1.1; font-weight: 800; margin-bottom: 20px; }
+  .hero h1 span { color: var(--amber); }
+  .hero p { color: var(--muted); font-size: 1.15rem; max-width: 600px; margin: 0 auto 36px; }
+  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* Sections */
+  section { padding: 80px 0; }
+  .section-title { text-align: center; margin-bottom: 48px; }
+  .section-title h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 800; }
+  .section-title p { color: var(--muted); margin-top: 8px; }
+  .divider { width: 60px; height: 4px; border-radius: 4px; margin: 14px auto 0; background: linear-gradient(90deg, var(--amber), var(--orange)); }
+
+  /* Menu */
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--surface); border-radius: var(--radius);
+    padding: 30px 26px; border: 1px solid rgba(255,255,255,0.05);
+    transition: transform 0.25s, border-color 0.25s;
+  }
+  .card:hover { transform: translateY(-6px); border-color: rgba(245,165,36,0.4); }
+  .card-icon {
+    width: 64px; height: 64px; border-radius: 16px;
+    display: grid; place-items: center; font-size: 2rem;
+    background: var(--surface-2); margin-bottom: 20px;
+  }
+  .card-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+  .card h3 { font-size: 1.2rem; }
+  .price { color: var(--amber); font-weight: 800; font-size: 1.15rem; white-space: nowrap; }
+  .card p { color: var(--muted); font-size: 0.95rem; }
+
+  /* Info */
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .info-box { background: var(--surface); border-radius: var(--radius); padding: 34px; border: 1px solid rgba(255,255,255,0.05); }
+  .info-box h3 { color: var(--amber); margin-bottom: 18px; font-size: 1.3rem; }
+  .hours-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .hours-row:last-child { border-bottom: none; }
+  .closed { color: var(--muted); }
+  .address { font-size: 1.15rem; margin-bottom: 20px; }
+
+  footer { text-align: center; padding: 36px 0; color: var(--muted); font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.06); }
+
+  /* Modal */
+  .modal-backdrop {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(0,0,0,0.65); backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-backdrop.open { display: flex; animation: fade 0.25s ease; }
+  .modal {
+    background: var(--surface); border-radius: var(--radius);
+    max-width: 440px; width: 100%; padding: 36px 30px; text-align: center;
+    border: 1px solid rgba(245,165,36,0.3);
+    animation: pop 0.3s ease;
+  }
+  .modal-emoji { font-size: 2.6rem; margin-bottom: 12px; }
+  .modal h3 { font-size: 1.35rem; margin-bottom: 12px; }
+  .modal p { color: var(--muted); margin-bottom: 26px; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes pop { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  @media (max-width: 700px) {
+    .nav-links { display: none; }
+    .nav { justify-content: center; }
+    .hero { padding: 70px 0 60px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">Taquizas <span>Edgar</span></a>
+    <nav class="nav-links">
+      <a href="#menu">Menu</a>
+      <a href="#visit">Hours &amp; Location</a>
+    </nav>
+    <button class="btn call-btn">Call to Order: (650) 771-0065</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <span class="badge">Union City's Favorite Food Truck</span>
+      <h1>Authentic Mexican Flavor,<br><span>Made Fresh Daily</span></h1>
+      <p>Handmade tacos, loaded burritos, and bold flavors served straight from our truck on Mission Blvd.</p>
+      <div class="hero-actions">
+        <button class="btn call-btn">Call to Order</button>
+        <a href="#menu" class="btn btn-outline">View Menu</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Menu</h2>
+        <p>Fresh ingredients, generous portions, real flavor.</p>
+        <div class="divider"></div>
+      </div>
+      <div class="menu-grid">
+        <div class="card">
+          <div class="card-icon">🌮</div>
+          <div class="card-top"><h3>Authentic Tacos</h3><span class="price">$3.50</span></div>
+          <p>Warm corn tortillas with your choice of meat, topped with fresh onion, cilantro, and house salsa.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🌯</div>
+          <div class="card-top"><h3>Super Burrito</h3><span class="price">$12.00</span></div>
+          <p>A giant flour tortilla packed with meat, rice, beans, cheese, sour cream, guacamole, and salsa.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🧀</div>
+          <div class="card-top"><h3>Super Nachos</h3><span class="price">$13.00</span></div>
+          <p>Crispy chips loaded with melted cheese, beans, your choice of meat, guacamole, and sour cream.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔥</div>
+          <div class="card-top"><h3>Cheesy Quesadilla</h3><span class="price">$11.00</span></div>
+          <p>A golden, grilled flour tortilla stuffed with melted cheese and your choice of meat, served with salsa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="visit">
+    <div class="container">
+      <div class="section-title">
+        <h2>Visit Us</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box">
+          <h3>🕒 Hours</h3>
+          <div class="hours-row"><span>Tuesday – Saturday</span><span>10:00 AM – 6:00 PM</span></div>
+          <div class="hours-row closed"><span>Sunday &amp; Monday</span><span>Closed</span></div>
+        </div>
+        <div class="info-box">
+          <h3>📍 Location</h3>
+          <p class="address">33503 Mission Blvd<br>Union City, CA</p>
+          <button class="btn call-btn">Call to Order: (650) 771-0065</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">&copy; Taquizas Edgar · Union City, CA · Website concept</div>
+</footer>
+
+<div class="modal-backdrop" id="demoModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-emoji">🌮</div>
+    <h3 id="modalTitle">Website Concept Preview</h3>
+    <p>Thanks for viewing the Taquizas Edgar website concept! This button can be instantly linked to your phone line once the site goes live. Reply to my email if you'd like to launch it!</p>
+    <button class="btn" id="closeModal">Got it</button>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById("demoModal");
+  const openModal = () => modal.classList.add("open");
+  const closeModal = () => modal.classList.remove("open");
+
+  document.querySelectorAll(".call-btn").forEach(btn => btn.addEventListener("click", openModal));
+  document.getElementById("closeModal").addEventListener("click", closeModal);
+  modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+</script>
+
+</body>
+</html>
